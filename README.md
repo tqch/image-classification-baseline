@@ -9,7 +9,7 @@
 - CIFAR-10
 - [Imagenette](https://github.com/fastai/imagenette)
 
-## Training Hyperparater Settings
+## Training hyperparater settings
 
 ### CIFAR-10 (ResNet/WideResNet)
 
@@ -34,9 +34,18 @@
 *as described in ref.3*
 
 - SGD with Nesterov momentum
-
 - learning rate decays with a factor of 0.2 at epochs 60, 120 and 160 epochs until 200 epochs
 - data augmentation: replace zero padding with reflection
+- dropout rate: 0.3
+
+## Experiment results
+
+### CIFAR-10
+
+| model | test accuracy |
+| :--: | :--: |
+| ResNet18 | 95.33% |
+| WideResNet28-10 | 96.32% |
 
 ## Acknowledgement
 
