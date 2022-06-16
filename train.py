@@ -20,13 +20,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataset = args.dataset
+    mod_name = args.model_name
 
-    config_path = os.path.join(args.config_dir, dataset + ".json")
+    config_path = os.path.join(
+        args.config_dir, f"{dataset}{'_' + mod_name if mod_name else ''}.json")
+
+    if not os.path.exists(config_path):
+        print("Model-specific config file not found!")
+        print("Falling back to common config...")
+        config_path = os.path.join(args.config_dir, f"{dataset}.json")
 
     with open(config_path, "r") as f:
         configs = json.load(f)
         mod_configs = configs["model"]
-        mod_name = args.model_name or mod_configs.pop("name", None)
+        mod_name = mod_name or mod_configs.pop("name", None)
         if mod_name:
             mod_configs = None
         opt_configs = configs["optimizer"]
@@ -80,7 +87,7 @@ if __name__ == "__main__":
             print("Checkpoint does not exist!")
 
     epochs = configs["epochs"]
-    print("Training starts...")
+    print("Training starts...", flush=True)
 
     for e in range(start_epoch, epochs):
         model.train()
@@ -106,10 +113,10 @@ if __name__ == "__main__":
                     with torch.no_grad():
                         for x, y in testloader:
                             out = model(x.to(device))
-                        pred = out.max(dim=-1)[1]
-                        total_test_loss += loss.item() * x.shape[0]
-                        total_test_correct += (pred == y.to(device)).sum().item()
-                        total_test_count += x.shape[0]
+                            pred = out.max(dim=-1)[1]
+                            total_test_loss += loss.item() * x.shape[0]
+                            total_test_correct += (pred == y.to(device)).sum().item()
+                            total_test_count += x.shape[0]
                     t.set_postfix({
                         "train_loss": total_train_loss / total_train_count,
                         "train_acc": total_train_correct / total_train_count,
