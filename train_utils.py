@@ -87,7 +87,7 @@ def build_all(
         sch_configs=None,
         dat_configs=None
 ):
-    if mod_name is not None:
+    if mod_name is not None and check_predefined(mod_name):
         model = build_model_from_name(mod_name)
     else:
         model = build_model_from_name(mod_configs)
@@ -95,3 +95,7 @@ def build_all(
     scheduler = build_scheduler(optimizer, sch_configs)
     trainloader, testloader = build_dataloader(dat_configs)
     return model, optimizer, scheduler, trainloader, testloader
+
+
+def check_predefined(model_name):
+    return model_name in PREDEFINED_MODEL_LIST
