@@ -120,11 +120,11 @@ MODEL_LIST = {
 
 
 def build_model(model_name):
-    return MODEL_LIST[model_name]
+    return MODEL_LIST[model_name]()
 
 
 def test():
-    model = build_model("resnet18")
+    model = build_model("wideresnet_28_10")
     y = model(torch.randn(1, 3, 32, 32))
     print(y.size())
 
