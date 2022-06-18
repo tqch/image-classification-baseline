@@ -44,8 +44,11 @@
 
 | model | test accuracy |
 | :--: | :--: |
-| ResNet18 | 95.33% |
-| WideResNet28-10 | 96.32% |
+| ResNet18 | 95.54% |
+| ResNet50 | 95.08% |
+| WideResNet28-10 | 96.38% |
+
+![learning curve](./assets/test_acc.svg)
 
 ## Acknowledgement
 
